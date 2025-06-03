@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
+
+:root {
+  --primary-bg: #101012;
+  --secondary-bg: #303030;
+  --primary-text: #fff;
+  --secondary-text: #a0a0a0;
+  --accent-color: #e50914;
+  --accent-hover: #ff1a1a;
+  --card-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* Глобальні стилі */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+/* Анімація появи */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*Бекграунд */
+.home-page {
+  background: url('src/assets/cinema.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+}
+
+/* Якщо потрібно затемнити фон для кращої читабельності тексту */
+.home-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Напівпрозорий чорний оверлей */
+  z-index: 0;
+}
+
+/* Перенесіть контент поверх фону */
+.movie-list-container {
+  position: relative;
+  z-index: 1;
+}
+/* Контейнер додатку */
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Шапка */
+.app-header {
+  background: linear-gradient(135deg, #000, var(--secondary-bg));
+  padding: 1.5rem 3rem;
+  margin: 2rem 0;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--card-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-middle {
+  display: flex;
+  gap: 5rem;
+  margin: 0 auto; /* Центрування кнопок */
+}
+.app-header h1 {
+  font-size: 2.4rem;
+  letter-spacing: -1px;
+  margin: 0;
+  color: var(--primary-text);
+}
+
+.app-header nav a {
+  color: var(--primary-text);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-header nav a:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+}
+.nav-link {
+  color: var(--primary-text) !important; /* Білий колір змінної */
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.8; /* Ефект при наведенні */
+}
+
+/* Пошук */
+.search-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1.5rem 2.5rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-text);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
+}
+
+/* Список фільмів */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.movie-card {
+  background: var(--secondary-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  position: relative;
+}
+.movie-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+/*.movie-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--accent-color);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.movie-card:hover::after {
+  opacity: 0.3;
+}*/
+.movie-poster-container {
+  height: 400px;
+  overflow: hidden;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster {
+  transform: scale(1.05);
+}
+
+.movie-info {
+  padding: 1.5rem;
+}
+
+.session-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.genre-badge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  align-self: flex-start;
+  font-size: 0.9rem;
+}
+
+.btn-book {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--accent-color);
+  color: var(--primary-text);
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-book:hover {
+  transform: translateY(-2px);
+  background: var(--accent-hover);
+}
+
+
+
+/* Форма бронювання */
+.booking-form {
+  background: var(--secondary-bg);
+  padding: 3rem;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: var(--card-shadow);
+}
+
+.booking-form h3 {
+  color: var(--accent-color);
+  margin: 0 0 2rem 0;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.booking-form input {
+  width: 95%;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: var(--primary-bg);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: var(--primary-text);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.booking-form input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.3);
+}
+
+.btn-booking {
+  width: 100%;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  background: var(--accent-color);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-transform: uppercase;
+}
+
+.btn-booking:hover {
+  background: var(--accent-hover);
+}
+/*Форма */
+
+/* Кінозал */
+.booking-page {
+  min-height: 90vh;
+  padding: 2rem;
+  background-color: var(--primary-bg);
+}
+
+/* Контейнер для елементів сторінки бронювання (екран, кінозал та форма) */
+.booking-container {
+  display: flex;
+  flex-direction: row;       /* Розташовуємо елементи в один ряд */
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;           /* На мобільних пристроях - елементи переходять на новий ряд */
+}
+
+/* Стилізація екрану (Screen) */
+.cinema-screen {
+  width: 100%;
+  max-width: 2000px;
+  height: 200px;              /* Збільшена висота */
+  background-color: #333;     /* Темний фон */
+  color: var(--accent-color);
+  font-weight: bold;
+  text-align: center;
+  line-height: 185px;         /* Вирівнювання тексту по вертикалі */
+  font-size: 2rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Стилізація кінозалу (сітка місць) */
+.cinema-hall {
+  flex: 1 1 60%;              /* Займає близько 60% ширини контейнера */
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);  /* 10 колонок для місць, щоб розташовувались по обидві сторони */
+  gap: 1rem;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.seat {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.seat.available { 
+  background: #00b706;
+  opacity: 0.9;
+}
+
+.seat.selected { 
+  background: #03dcf0;
+  opacity: 0.9;
+}
+
+.seat.booked { 
+  background: var(--accent-color);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .movie-list {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .movie-poster-container {
+    height: 300px;
+  }
+
+  .cinema-hall {
+    grid-template-columns: repeat(5, 1fr);
+    padding: 1rem;
+  }
+
+  .search-input {
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .booking-form {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  .nav-middle {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .seat {
+    font-size: 0.8rem;
+  }
+  .home-page {
+    background-attachment: scroll; /* Вимкнути фіксацію на мобільних */
+  }
+  @media (max-width: 768px) {
+    /* Вимкнути анімації на мобільних */
+    .movie-card {
+      animation: none !important;
+      opacity: 1;
+    }
+    
+    /* Спростити ховер */
+    .movie-card:hover {
+      transform: none;
+      box-shadow: var(--card-shadow);
+    }
+  }
+}
